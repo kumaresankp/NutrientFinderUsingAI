@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}NutrientFinderUsingAI | Home{% endblock %}
+
+{% block content %}
+<div class="p-4 p-md-5 mb-4 rounded bg-light text-center">
+    <h1 class="display-4 fw-bold">Welcome to NutrientFinderUsingAI</h1>
+    <p class="lead my-3">Unlock the hidden nutritional facts of your food with the power of AI. Upload photos, get instant health insights!</p>
+    <a href="{% url 'signup' %}" class="btn btn-warning btn-lg text-dark">Upload Meal</a>
+</div>
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <img src="https://via.placeholder.com/350x200?text=Upload+Food+Image" class="card-img-top" alt="Upload">
+            <div class="card-body">
+                <h5 class="card-title">Upload Your Meal</h5>
+                <p class="card-text">Simply take a photo of your food and let our AI break down the nutrition instantly!</p>
+                <a href="{% url 'signup' %}" class="btn btn-outline-primary">Upload Now</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <img src="https://via.placeholder.com/350x200?text=Instant+Nutrition+Report" class="card-img-top" alt="Report">
+            <div class="card-body">
+                <h5 class="card-title">Get Instant Reports</h5>
+                <p class="card-text">Our AI generates calorie, protein, fat & vitamin estimates for balanced diet planning.</p>
+                <a href="#" class="btn btn-outline-success">See Example</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+            <img src="https://via.placeholder.com/350x200?text=Track+Your+Health" class="card-img-top" alt="Tracking">
+            <div class="card-body">
+                <h5 class="card-title">Track Your Health</h5>
+                <p class="card-text">Save your reports, track your intake over time, and reach your fitness goals smartly.</p>
+                <a href="#" class="btn btn-outline-warning text-dark">Start Tracking</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

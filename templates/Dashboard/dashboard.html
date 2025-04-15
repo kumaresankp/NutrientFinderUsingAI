@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard | NutrientFinderUsingAI{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Your Latest Uploaded Food Image and Result</h2>
+
+    <!-- Form to upload new image -->
+    <div class="mb-4">
+        <h4>Upload a New Food Image</h4>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="mb-3">
+                <label for="food_image" class="form-label">Choose an image to upload</label>
+                <input type="file" name="food_image" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-warning w-100 text-dark">Upload Image</button>
+        </form>
+    </div>
+
+    <!-- Display the most recent upload -->
+    {% if upload %}
+        <h4>Your Latest Upload:</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <img src="{{ upload.image.url }}" class="card-img-top" alt="Food Image">
+                    <div class="card-body">
+                        <h5 class="card-title">Uploaded on: {{ upload.uploaded_at }}</h5>
+                        <p class="card-text">Nutrition Information:</p>
+                        <pre>{{ upload.content }}</pre>  <!-- Display AI result (content) -->
+
+                        <!-- Optionally, link to full image -->
+                        <a href="{{ upload.image.url }}" class="btn btn-primary" target="_blank">View Full Image</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <p>No uploads yet. Please upload an image to get started.</p>
+    {% endif %}
+</div>
+{% endblock %}

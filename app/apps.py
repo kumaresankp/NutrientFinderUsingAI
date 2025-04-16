@@ -1,6 +1,9 @@
+# apps.py
+
 from django.apps import AppConfig
 
+class YourAppConfig(AppConfig):
+    name = 'app'  # Replace with your app's name
 
-class AppConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'app'
+    def ready(self):
+        import app.signals  # Make sure this points to your signals.py file

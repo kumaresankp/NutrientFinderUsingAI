@@ -4,41 +4,92 @@
 
 {% block content %}
 <div class="container mt-5">
-    <h2 class="mb-4 text-center">Your Latest Uploaded Food Image and Result</h2>
+    <div class="card shadow-lg">
+        <div class="card-body">
+            <h2 class="mb-4 text-center">Your Latest Uploaded Food Image and Result</h2>
 
-    <!-- Form to upload new image -->
-    <div class="mb-4">
-        <h4>Upload a New Food Image</h4>
-        <form method="POST" enctype="multipart/form-data">
-            {% csrf_token %}
-            <div class="mb-3">
-                <label for="food_image" class="form-label">Choose an image to upload</label>
-                <input type="file" name="food_image" class="form-control" required>
+            <!-- Form to upload new image -->
+            <div class="mb-4">
+                <h4>Upload a New Food Image</h4>
+                <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="food_image" class="form-label">Choose an image to upload</label>
+                        <input type="file" name="food_image" class="form-control" required id="food_image">
+                    </div>
+                    <button type="submit" class="btn btn-warning w-100 text-dark">Upload Image</button>
+                </form>
             </div>
-            <button type="submit" class="btn btn-warning w-100 text-dark">Upload Image</button>
-        </form>
+
+            <!-- Loader spinner -->
+           <div id="loader" class="text-center" style="display: none;">
+    <div class="spinner-border text-success" role="status">
+        <span class="visually-hidden">Loading...</span>
     </div>
+</div>
 
-    <!-- Display the most recent upload -->
-    {% if upload %}
-        <h4>Your Latest Upload:</h4>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card">
-                    <img src="{{ upload.image.url }}" class="card-img-top" alt="Food Image">
-                    <div class="card-body">
-                        <h5 class="card-title">Uploaded on: {{ upload.uploaded_at }}</h5>
-                        <p class="card-text">Nutrition Information:</p>
-                        <pre>{{ upload.content }}</pre>  <!-- Display AI result (content) -->
+            <!-- Display the most recent upload -->
+            {% if upload %}
+            <div class="mt-5">
+                <h4>Your Latest Upload:</h4>
+                <div class="card mb-4 shadow-sm">
+                    <div class="row g-0">
+                        <div class="col-md-6">
+                            <img src="{{ upload.image.url }}" class="card-img-top rounded-start" alt="Food Image">
+                        </div>
+                        <div class="col-md-6">
+                            <div class="card-body">
+                                <h5 class="card-title">Uploaded on: {{ upload.uploaded_at }}</h5>
 
-                        <!-- Optionally, link to full image -->
-                        <a href="{{ upload.image.url }}" class="btn btn-primary" target="_blank">View Full Image</a>
+                                <!-- Table to display parsed content -->
+                                <table class="table table-striped">
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Food Name:</strong></td>
+                                            <td>{{ upload.parsed_content.food_name }}</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Calories:</strong></td>
+                                            <td>{{ upload.parsed_content.calories }} kcal</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Protein:</strong></td>
+                                            <td>{{ upload.parsed_content.protein }} g</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Carbohydrates:</strong></td>
+                                            <td>{{ upload.parsed_content.carbohydrates }} g</td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Fat:</strong></td>
+                                            <td>{{ upload.parsed_content.fat }} g</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                                <!-- Optionally, link to full image -->
+                                <a href="{{ upload.image.url }}" class="btn btn-primary" target="_blank">View Full Image</a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+            {% else %}
+            <p class="mt-4 text-center">No uploads yet. Please upload an image to get started.</p>
+            {% endif %}
+
+            <!-- Button to view previous uploads -->
+            <div class="mt-4 text-center">
+                <a href="{% url 'uploaded_images' %}" class="btn btn-secondary">View Previous Uploads</a>
+            </div>
         </div>
-    {% else %}
-        <p>No uploads yet. Please upload an image to get started.</p>
-    {% endif %}
+    </div>
 </div>
+
+<script>
+    // Show the loader spinner when the form is submitted
+    document.getElementById("uploadForm").addEventListener("submit", function(event){
+        document.getElementById("loader").style.display = "block";  // Show the spinner
+    });
+</script>
 {% endblock %}

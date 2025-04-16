@@ -10,6 +10,8 @@ urlpatterns = [
     path('signup/', views.signup, name='signup'),
     path('login/', views.login_view, name='login'),
     path('dashboard/', views.dashboard, name='dashboard'),
+    path('logout/', views.user_logout, name='logout'),
+    path('uploaded_images/', views.uploaded_images, name='uploaded_images'),
 ]+ static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
 
 urlpatterns+= static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)

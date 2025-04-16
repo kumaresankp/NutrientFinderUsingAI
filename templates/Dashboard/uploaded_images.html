@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+
+{% block title %}Your Uploaded Images{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h2>Your Uploaded Images</h2>
+    
+    {% if uploads %}
+        <div class="row">
+            {% for upload in uploads %}
+                <div class="col-md-4">
+                    <div class="card mb-4">
+                        <img src="{{ upload.image.url }}" class="card-img-top" alt="Uploaded Image">
+                        <div class="card-body">
+                            <p><strong>Uploaded at:</strong> {{ upload.uploaded_at }}</p>
+                            
+                            <!-- Display food name if available -->
+                            {% if upload.parsed_content.food_name %}
+                                <p><strong>Food Name:</strong> {{ upload.parsed_content.food_name }}</p>
+                            {% else %}
+                                <p><strong>Food Name:</strong> Not detected</p>
+                            {% endif %}
+
+                            <!-- Table to display parsed content -->
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Calories:</strong></td>
+                                        <td>{{ upload.parsed_content.calories }} kcal</td> <!-- Display calories with units -->
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Protein:</strong></td>
+                                        <td>{{ upload.parsed_content.protein }} g</td> <!-- Display protein with grams -->
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Carbohydrates:</strong></td>
+                                        <td>{{ upload.parsed_content.carbohydrates }} g</td> <!-- Display carbs with grams -->
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Fat:</strong></td>
+                                        <td>{{ upload.parsed_content.fat }} g</td> <!-- Display fat with grams -->
+                                    </tr>
+                                    <!-- Add more fields if necessary based on the AI response structure -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>You have not uploaded any images yet.</p>
+    {% endif %}
+</div>
+{% endblock %}
